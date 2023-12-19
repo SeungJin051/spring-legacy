@@ -1,0 +1,57 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cs.dit.mapper.KioskMenuMapper">
+    <insert id="addMenu" parameterType="cs.dit.model.KioskMenu">
+        INSERT INTO kioskmenu (image, name, price, info) 
+        VALUES (#{image}, #{name}, #{price}, #{info})
+    </insert>
+    
+    <select id="getAllMenus" resultType="cs.dit.model.KioskMenu">
+        SELECT * FROM kioskmenu
+    </select>
+    
+    <select id="getMenuById" resultType="cs.dit.model.KioskMenu" parameterType="int">
+        SELECT * FROM kioskmenu WHERE id = #{menuId}
+    </select>
+    
+    <update id="updateMenu" parameterType="cs.dit.model.KioskMenu">
+        UPDATE kioskmenu
+        SET name = #{name}, price = #{price}, info = #{info}, image = #{image}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteMenu" parameterType="int">
+        DELETE FROM kioskmenu WHERE id = #{menuId}
+    </delete>    
+    
+	<insert id="addOrderedMenu" parameterType="cs.dit.model.KioskMenu">
+	    INSERT INTO kioskbasket (image, name, price, info)
+	    VALUES (#{image}, #{name}, #{price}, #{info})
+	</insert>
+	
+	<select id="getAllBasketMenus" resultType="cs.dit.model.KioskMenu">
+    	SELECT * FROM kioskbasket
+	</select>
+	
+	<insert id="savePayment" parameterType="cs.dit.model.Payment">
+        INSERT INTO Payment (impUid, merchantUid, name, paidAmount, paidAt)
+        VALUES (#{impUid}, #{merchantUid}, #{name}, #{paidAmount}, #{paidAt})
+    </insert>
+
+    <delete id="deletePayment" parameterType="cs.dit.model.KioskMenu">
+        DELETE FROM kioskbasket
+    </delete>  
+    
+     <delete id="deleteOneBasket" parameterType="cs.dit.model.KioskMenu">
+        DELETE FROM kioskbasket WHERE id = #{itemId}
+    </delete>      
+    
+   	<select id="getAllPayed" resultType="cs.dit.model.Payment">
+    	SELECT * FROM payment
+	</select>
+	
+	 <delete id="deleteAdminOrder" parameterType="cs.dit.model.Payment">
+        DELETE FROM payment WHERE impUid = #{impUid}
+    </delete>    
+</mapper>
+
